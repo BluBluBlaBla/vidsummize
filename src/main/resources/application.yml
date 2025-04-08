@@ -1,14 +1,12 @@
 spring:
   application:
     name: vidsummize
-
   datasource:
-    url: jdbc:postgresql://localhost:5432/vidsummize
-    username: postgres
-    password: postgres
-
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/vidsummize}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
   jooq:
-    sql-dialect: postgres
+    sql-dialect: ${SPRING_JOOQ_SQL_DIALECT:postgres}
 
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
