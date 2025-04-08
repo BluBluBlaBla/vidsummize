@@ -63,6 +63,19 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
+    public VideoDTO findById(Integer id) {
+        return videoRepository.findById(id)
+                .map(video -> new VideoDTO(
+                        video.getId(),
+                        video.getYoutubeUrl(),
+                        video.getTranscription(),
+                        video.getSummary(),
+                        video.getCreatedAt()
+                ))
+                .orElseThrow(() -> new RuntimeException("Video não encontrado com ID = " + id));
+    }
+
+    @Override
     public String summarizeText(String transcription) {
         return deepSeekIntegration.summarize(transcription);
     }

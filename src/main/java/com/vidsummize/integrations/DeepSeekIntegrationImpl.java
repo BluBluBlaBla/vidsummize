@@ -6,6 +6,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Component
 public class DeepSeekIntegrationImpl implements DeepSeekIntegration {
 
@@ -33,8 +35,13 @@ public class DeepSeekIntegrationImpl implements DeepSeekIntegration {
 
             JSONObject payload = new JSONObject();
             payload.put("model", ollamaModelName);
-            payload.put("prompt", "Resuma o texto: " + transcription);
             payload.put("stream", false);
+
+            JSONObject userMessage = new JSONObject();
+            userMessage.put("role", "user");
+            userMessage.put("content", "Make a summary of the texts: " + transcription);
+
+            payload.put("messages", List.of(userMessage));
 
             HttpEntity<String> requestEntity = new HttpEntity<>(payload.toString(), headers);
             ResponseEntity<String> response = restTemplate.exchange(
@@ -44,8 +51,17 @@ public class DeepSeekIntegrationImpl implements DeepSeekIntegration {
                     String.class
             );
 
-            if(response.getStatusCode() == HttpStatus.OK) {
-                return response.getBody();
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
+                JSONObject json = new JSONObject(response.getBody());
+                JSONObject message = json.optJSONObject("message");
+                if (message == null) {
+                    return "Aviso: sem campo 'message' na resposta -> " + response.getBody();
+                }
+                String content = message.optString("content", "");
+                if (content.isEmpty()) {
+                    return "Aviso: campo 'content' vazio na resposta -> " + response.getBody();
+                }
+                return content.trim();
             } else {
                 return "Erro ao resumir o texto: " + response.getStatusCode();
             }

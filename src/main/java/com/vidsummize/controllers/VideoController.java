@@ -32,4 +32,10 @@ public class VideoController {
         String summary = videoService.summarizeText(transcription);
         return ResponseEntity.ok(summary);
     }
+
+    @GetMapping("/videos/{id}")
+    public ResponseEntity<VideoDTO> getVideo(@PathVariable Integer id) {
+        VideoDTO videoDTO = videoService.findById(id);
+        return ResponseEntity.ok(videoDTO);
+    }
 }
