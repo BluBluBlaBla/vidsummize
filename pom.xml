@@ -133,7 +133,6 @@
 						<user>postgres</user>
 						<password>postgres</password>
 					</jdbc>
-
 					<generator>
 						<database>
 							<name>org.jooq.meta.postgres.PostgresDatabase</name>
