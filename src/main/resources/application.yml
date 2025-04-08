@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: vidsummize
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vidsummize
+    username: postgres
+    password: postgres
+
+  jooq:
+    sql-dialect: postgres
+
+server:
+  port: 8080
