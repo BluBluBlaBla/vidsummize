@@ -8,12 +8,16 @@ RUN mvn clean package -DskipTests -Djooq.codegen.skip=true
 
 FROM nvidia/cuda:12.1.1-cudnn8-runtime-ubuntu22.04 AS whisper-build
 WORKDIR /whisper
-RUN apt-get update && apt-get install -y git cmake build-essential && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git cmake build-essential curl && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/ggml-org/whisper.cpp.git
 WORKDIR /whisper/whisper.cpp
 
-RUN mkdir build && cd build && cmake .. && cmake --build . --config Release
+RUN mkdir build && cd build && \
+    cmake .. -DBUILD_SHARED_LIBS=OFF && \
+    cmake --build . --config Release
+
+RUN cd /whisper/whisper.cpp && ./models/download-ggml-model.sh base.en
 
 FROM openjdk:21-slim
 WORKDIR /app
@@ -27,11 +31,11 @@ COPY --from=whisper-build /whisper/whisper.cpp/build/bin/whisper-cli /opt/whispe
 COPY --from=whisper-build /whisper/whisper.cpp/models /opt/whisper/whisper.cpp/models
 
 RUN apt-get update && apt-get install -y \
-      ffmpeg \
-      python3 \
-      python3-pip \
-   && pip3 install --break-system-packages yt-dlp \
-   && apt-get clean && rm -rf /var/lib/apt/lists/*
+    ffmpeg \
+    python3 \
+    python3-pip \
+  && pip3 install --break-system-packages yt-dlp \
+  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 8080
 

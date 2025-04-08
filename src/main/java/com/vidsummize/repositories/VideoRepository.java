@@ -8,4 +8,5 @@ public interface VideoRepository {
     Video save(Video video);
     Optional<Video> findById(Integer id);
     List<Video> findAll();
+    Video update(Video video);
 }
