@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet id="2" author="Mateus Merlim Mattos">
+        <createTable tableName="video">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="youtube_url" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transcription" type="TEXT"/>
+            <column name="summary" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
