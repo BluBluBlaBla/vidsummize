@@ -2,9 +2,11 @@ package com.vidsummize.integrations;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.util.Objects;
 
 @Component
 public class WhisperIntegrationImpl implements WhisperIntegration {
@@ -16,11 +18,24 @@ public class WhisperIntegrationImpl implements WhisperIntegration {
         try {
 
             String ytdlpCommand = dotenv.get("YTDLP_COMMAND");
+            String whisperExecutable = dotenv.get("WHISPER_CPP_PATH");
+            String whisperWorkdir = dotenv.get("WHISPER_WORKDIR");
+            String whisperModelPath = dotenv.get("WHISPER_MODEL_PATH");
+
             if (ytdlpCommand == null || ytdlpCommand.isEmpty()) {
                 throw new IllegalStateException("A variável de ambiente YTDLP_COMMAND não foi definida no .env");
             }
+            if (whisperExecutable == null || whisperExecutable.isEmpty()) {
+                throw new IllegalStateException("A variável de ambiente WHISPER_CPP_PATH não foi definida no .env");
+            }
+            if (whisperWorkdir == null || whisperWorkdir.isEmpty()) {
+                throw new IllegalStateException("A variável de ambiente WHISPER_WORKDIR não foi definida no .env");
+            }
+            if (whisperModelPath == null || whisperModelPath.isEmpty()) {
+                throw new IllegalStateException("A variável de ambiente WHISPER_MODEL_PATH não foi definida no .env");
+            }
 
-            File workingDir = new File("/home/lynon/projects/my-projects/vidsummize/temp");
+            File workingDir = new File(whisperWorkdir);
             if (!workingDir.exists()) {
                 workingDir.mkdirs();
             }
@@ -42,18 +57,12 @@ public class WhisperIntegrationImpl implements WhisperIntegration {
             }
             ytDlpProcess.waitFor();
 
-            String whisperExecutable = dotenv.get("WHISPER_CPP_PATH");
-            if (whisperExecutable == null || whisperExecutable.isEmpty()) {
-                throw new IllegalStateException("A variável de ambiente WHISPER_CPP_PATH não foi definida no .env");
-            }
-
-            String modelo = "/home/lynon/projects/my-projects/whisper/whisper.cpp/models/ggml-base.en.bin";
-
             String audioFilePath = new File(workingDir, "audio.mp3").getAbsolutePath();
 
+            // Passo 2: rodar o whisper
             ProcessBuilder whisperProcessBuilder = new ProcessBuilder(
                     whisperExecutable,
-                    "-m", modelo,
+                    "-m", whisperModelPath,
                     "-f", audioFilePath
             );
 
@@ -71,10 +80,11 @@ public class WhisperIntegrationImpl implements WhisperIntegration {
 
             File audioFile = new File(workingDir, "audio.mp3");
             if (audioFile.exists()) {
-                 audioFile.delete();
+                audioFile.delete();
             }
 
             return transcription.toString();
+
         } catch (Exception e) {
             e.printStackTrace();
             return "Erro na transcrição: " + e.getMessage();

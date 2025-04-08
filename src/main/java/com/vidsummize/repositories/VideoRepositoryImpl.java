@@ -30,6 +30,18 @@ public class VideoRepositoryImpl implements VideoRepository {
         return video;
     }
 
+    @Override
+    public Video update(Video video) {
+        dsl.update(VIDEO)
+                .set(VIDEO.YOUTUBE_URL, video.getYoutubeUrl())
+                .set(VIDEO.TRANSCRIPTION, video.getTranscription())
+                .set(VIDEO.SUMMARY, video.getSummary())
+                .set(VIDEO.CREATED_AT, video.getCreatedAt())
+                .where(VIDEO.ID.eq(video.getId()))
+                .execute();
+        return video;
+    }
+
     public Optional<Video> findById(Integer id) {
         Video result = dsl.selectFrom(VIDEO)
                 .where(VIDEO.ID.eq(id))
