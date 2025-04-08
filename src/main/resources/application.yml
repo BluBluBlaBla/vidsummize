@@ -7,6 +7,8 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD:postgres}
   jooq:
     sql-dialect: ${SPRING_JOOQ_SQL_DIALECT:postgres}
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
 
 server:
   port: ${SERVER_PORT:8080}
